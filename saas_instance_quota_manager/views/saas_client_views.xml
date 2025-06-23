@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit saas.client form view to add quota fields -->
+    <record id="view_saas_client_form_quota" model="ir.ui.view">
+        <field name="name">saas.client.form.quota</field>
+        <field name="model">saas.client</field>
+        <field name="inherit_id" ref="odoo_saas_kit.view_saas_client_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="after">
+                <group string="Quotas" name="quota_group">
+                    <field name="max_quotations" help="0 = illimité"/>
+                    <field name="max_invoices" help="0 = illimité"/>
+                    <button name="apply_quotas" 
+                            string="Appliquer les quotas" 
+                            type="object" 
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'started')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit saas.client tree view to show quota fields -->
+    <record id="view_saas_client_tree_quota" model="ir.ui.view">
+        <field name="name">saas.client.tree.quota</field>
+        <field name="model">saas.client</field>
+        <field name="inherit_id" ref="odoo_saas_kit.view_saas_client_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="max_quotations" optional="show"/>
+                <field name="max_invoices" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo> 

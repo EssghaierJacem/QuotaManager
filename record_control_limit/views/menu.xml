@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Item -->
+    <menuitem id="menu_quota_usage"
+              name="Quota d'utilisation"
+              parent="sale.menu_sale_root"
+              action="action_quota_usage"
+              sequence="100"/>
+</odoo> 

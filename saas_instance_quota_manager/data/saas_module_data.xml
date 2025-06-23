@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Add record_control_limit to the list of modules to install in new instances -->
+        <record id="saas_module_record_control_limit" model="saas.module">
+            <field name="name">Record Control Limit</field>
+            <field name="technical_name">record_control_limit</field>
+            <field name="description">Control quotation and invoice creation limits</field>
+            <field name="is_auto_install" eval="True"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo> 

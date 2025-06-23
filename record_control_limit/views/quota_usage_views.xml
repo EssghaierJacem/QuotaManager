@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_quota_usage_tree" model="ir.ui.view">
+        <field name="name">quota.usage.tree</field>
+        <field name="model">quota.usage</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="total_quota"/>
+                <field name="current_usage"/>
+                <field name="remaining"/>
+                <field name="percentage_used" widget="percentage"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_quota_usage_form" model="ir.ui.view">
+        <field name="name">quota.usage.form</field>
+        <field name="model">quota.usage</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="total_quota"/>
+                        <field name="current_usage"/>
+                        <field name="remaining"/>
+                        <field name="percentage_used" widget="percentage"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_quota_usage" model="ir.actions.act_window">
+        <field name="name">Quota d'utilisation</field>
+        <field name="res_model">quota.usage</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_quota_usage_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aucun quota défini
+            </p>
+            <p>
+                Les quotas sont définis par votre administrateur SaaS.
+            </p>
+        </field>
+    </record>
+</odoo> 
