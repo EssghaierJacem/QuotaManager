@@ -3,7 +3,7 @@
     <!-- Menu Item -->
     <menuitem id="menu_quota_usage"
               name="Quota d'utilisation"
-              parent="base.menu_sales"
+              parent="base.menu_root"
               action="action_quota_usage"
               sequence="100"/>
 </odoo> 

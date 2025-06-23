@@ -6,7 +6,6 @@
             <field name="name">Record Control Limit</field>
             <field name="technical_name">record_control_limit</field>
             <field name="description">Control quotation and invoice creation limits</field>
-            <field name="is_auto_install" eval="True"/>
             <field name="active" eval="True"/>
             <field name="module_type">custom</field>
         </record>
