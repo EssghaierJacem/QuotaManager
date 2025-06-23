@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Menu Item -->
+    <!-- Create a root menu -->
+    <menuitem id="menu_quota_root" name="Quota Management" sequence="10"/>
+
+    <!-- Add submenu under it -->
     <menuitem id="menu_quota_usage"
               name="Quota d'utilisation"
-              parent="base.menu_root"
+              parent="menu_quota_root"
               action="action_quota_usage"
               sequence="100"/>
-</odoo> 
+</odoo>
