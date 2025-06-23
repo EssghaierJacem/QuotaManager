@@ -25,7 +25,7 @@ class QuotaUsage(models.Model):
                         GREATEST(0, COALESCE(CAST(param_quotations.value AS INTEGER), 0) - COUNT(so.id)) as remaining,
                         CASE 
                             WHEN COALESCE(CAST(param_quotations.value AS INTEGER), 0) > 0 
-                            THEN ROUND((COUNT(so.id)::float / CAST(param_quotations.value AS INTEGER)) * 100, 2)
+                            THEN ROUND((COUNT(so.id)::numeric / CAST(param_quotations.value AS numeric)) * 100, 2)
                             ELSE 0 
                         END as percentage_used
                     FROM sale_order so
@@ -42,7 +42,7 @@ class QuotaUsage(models.Model):
                         GREATEST(0, COALESCE(CAST(param_invoices.value AS INTEGER), 0) - COUNT(am.id)) as remaining,
                         CASE 
                             WHEN COALESCE(CAST(param_invoices.value AS INTEGER), 0) > 0 
-                            THEN ROUND((COUNT(am.id)::float / CAST(param_invoices.value AS INTEGER)) * 100, 2)
+                            THEN ROUND((COUNT(am.id)::numeric / CAST(param_invoices.value AS numeric)) * 100, 2)
                             ELSE 0 
                         END as percentage_used
                     FROM account_move am
