@@ -12,6 +12,7 @@ class QuotaUsage(models.Model):
     current_usage = fields.Integer(string='Current Usage', readonly=True)
     remaining = fields.Integer(string='Remaining', readonly=True)
     percentage_used = fields.Float(string='Percentage Used (%)', readonly=True)
+    company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     def init(self):
         tools = self.env['ir.module.module'].sudo().search([('name', '=', 'base')])
@@ -27,11 +28,12 @@ class QuotaUsage(models.Model):
                             WHEN COALESCE(CAST(param_quotations.value AS INTEGER), 0) > 0 
                             THEN ROUND((COUNT(so.id)::numeric / CAST(param_quotations.value AS numeric)) * 100, 2)
                             ELSE 0 
-                        END as percentage_used
+                        END as percentage_used,
+                        so.company_id as company_id
                     FROM sale_order so
                     CROSS JOIN ir_config_parameter param_quotations
                     WHERE param_quotations.key = 'record_control_limit.max_quotations'
-                    GROUP BY param_quotations.value
+                    GROUP BY param_quotations.value, so.company_id
                     
                     UNION ALL
                     
@@ -44,11 +46,12 @@ class QuotaUsage(models.Model):
                             WHEN COALESCE(CAST(param_invoices.value AS INTEGER), 0) > 0 
                             THEN ROUND((COUNT(am.id)::numeric / CAST(param_invoices.value AS numeric)) * 100, 2)
                             ELSE 0 
-                        END as percentage_used
+                        END as percentage_used,
+                        am.company_id as company_id
                     FROM account_move am
                     CROSS JOIN ir_config_parameter param_invoices
                     WHERE param_invoices.key = 'record_control_limit.max_invoices'
                     AND am.move_type IN ('out_invoice', 'out_refund')
-                    GROUP BY param_invoices.value
+                    GROUP BY param_invoices.value, am.company_id
                 )
             """) 

@@ -19,7 +19,8 @@ class AccountMove(models.Model):
             try:
                 max_invoices = int(max_invoices)
                 current_invoices = self.env['account.move'].search_count([
-                    ('move_type', 'in', ['out_invoice', 'out_refund'])
+                    ('move_type', 'in', ['out_invoice', 'out_refund']),
+                    ('company_id', '=', self.env.company.id)
                 ])
                 
                 if current_invoices >= max_invoices:

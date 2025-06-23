@@ -18,7 +18,9 @@ class SaleOrder(models.Model):
         if max_quotations:
             try:
                 max_quotations = int(max_quotations)
-                current_quotations = self.env['sale.order'].search_count([])
+                current_quotations = self.env['sale.order'].search_count([
+                    ('company_id', '=', self.env.company.id)
+                ])
                 
                 if current_quotations >= max_quotations:
                     raise UserError(_(

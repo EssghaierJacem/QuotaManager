@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import xmlrpc.client
 import logging
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -11,6 +12,19 @@ class SaasClient(models.Model):
 
     max_quotations = fields.Integer(string='Max Quotations', default=0, help="Maximum number of quotations allowed (0 = unlimited)")
     max_invoices = fields.Integer(string='Max Invoices', default=0, help="Maximum number of invoices allowed (0 = unlimited)")
+
+    def _get_secure_url(self, url):
+        """Ensure URL uses HTTPS protocol"""
+        if not url:
+            return url
+        # Remove any trailing slashes
+        url = url.rstrip('/')
+        # Replace http:// with https:// if present, or add https:// if no protocol
+        if url.startswith('http://'):
+            url = 'https://' + url[7:]
+        elif not url.startswith('https://'):
+            url = 'https://' + url
+        return url
 
     def apply_quotas(self):
         """Apply quotas to the client instance via XML-RPC"""
@@ -25,8 +39,8 @@ class SaasClient(models.Model):
                 
                 contract = client.saas_contract_id
                 
-                # Connect to client instance
-                client_url = client.client_url.rstrip('/')
+                # Connect to client instance with HTTPS
+                client_url = self._get_secure_url(client.client_url)
                 common = xmlrpc.client.ServerProxy(f'{client_url}/xmlrpc/2/common')
                 
                 # Try to authenticate with admin user
@@ -78,7 +92,7 @@ class SaasClient(models.Model):
                 
             try:
                 contract = client.saas_contract_id
-                client_url = client.client_url.rstrip('/')
+                client_url = self._get_secure_url(client.client_url)
                 common = xmlrpc.client.ServerProxy(f'{client_url}/xmlrpc/2/common')
                 
                 uid = common.authenticate(contract.db_template, 'admin', contract.token, {})

@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
                 <field name="total_quota"/>
                 <field name="current_usage"/>
                 <field name="remaining"/>
@@ -24,6 +25,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
                         <field name="total_quota"/>
                         <field name="current_usage"/>
                         <field name="remaining"/>
@@ -34,12 +36,27 @@
         </field>
     </record>
 
+    <!-- Search View -->
+    <record id="view_quota_usage_search" model="ir.ui.view">
+        <field name="name">quota.usage.search</field>
+        <field name="model">quota.usage</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter string="My Company" name="my_company" domain="[('company_id', '=', allowed_company_ids[0])]"/>
+            </search>
+        </field>
+    </record>
+
     <!-- Action -->
     <record id="action_quota_usage" model="ir.actions.act_window">
         <field name="name">Quota d'utilisation</field>
         <field name="res_model">quota.usage</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_quota_usage_tree"/>
+        <field name="search_view_id" ref="view_quota_usage_search"/>
+        <field name="context">{'search_default_my_company': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Aucun quota défini
