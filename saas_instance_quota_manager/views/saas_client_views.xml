@@ -10,11 +10,11 @@
                 <group string="Quotas" name="quota_group">
                     <field name="max_quotations" help="0 = illimité"/>
                     <field name="max_invoices" help="0 = illimité"/>
-                    <button name="apply_quotas" 
-                            string="Appliquer les quotas" 
-                            type="object" 
+                    <button name="apply_quotas"
+                            string="Appliquer les quotas"
+                            type="object"
                             class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'started')]}"/>
+                            modifiers='{"invisible": [["state", "!=", "started"]]}'/>
                 </group>
             </xpath>
         </field>
@@ -32,4 +32,4 @@
             </xpath>
         </field>
     </record>
-</odoo> 
+</odoo>
