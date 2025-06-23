@@ -24,7 +24,7 @@
     <record id="view_saas_client_tree_quota" model="ir.ui.view">
         <field name="name">saas.client.tree.quota</field>
         <field name="model">saas.client</field>
-        <field name="inherit_id" ref="odoo_saas_kit.view_saas_client_tree"/>
+        <field name="inherit_id" ref="odoo_saas_kit.saas_client_tree_view"/>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
                 <field name="max_quotations" optional="show"/>
@@ -32,4 +32,4 @@
             </xpath>
         </field>
     </record>
-</odoo>
+</odoo> 
